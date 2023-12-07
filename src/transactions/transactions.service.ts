@@ -2,7 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import { PayablesService } from '../payables/payables.service'; // Importe o serviço PayablesService
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios';
 
@@ -14,8 +13,9 @@ export class TransactionsService {
     private readonly httpService: HttpService,
   ) {}// Injete o serviço PayablesService no construtor
   
-  private apiBaseUrl = 'http://localhost:8080'; // Atualize para a URL correta
+  private baseUrl = 'http://localhost:8080'; // Atualize para a URL correta
   private transactionsEndpoint = '/transactions';
+  private payablesEndpoint = '/payables';
   
 
 
@@ -55,35 +55,65 @@ export class TransactionsService {
     // ... other transactions
   ];
 
-  getAllTransactions() {
-   
-    return this.transactions;
-    // return this.transactions;
+  async getAllTransactions(): Promise<any[]> {
+    try {
+      const response: AxiosResponse<any[]> = await this.httpService.get(`${this.baseUrl}${this.transactionsEndpoint}`).toPromise();
+      return response.data; // Retorna apenas os dados, sem a estrutura do Axios
+    } catch (error) {
+      console.error(error);
+      throw new Error('Erro ao obter transações da API.');
+    }
   }
 
-  getTransactionById(id: string) {
-    return this.transactions.find((transaction) => transaction.id === id);
+  async getTransactionById(id: string): Promise<any> {
+    try {
+      const response: AxiosResponse<any> = await this.httpService.get(`${this.baseUrl}${this.transactionsEndpoint}/${id}`).toPromise();
+      return response.data; // Retorna apenas os dados da transação, sem a estrutura do Axios
+    } catch (error) {
+      console.error(error);
+      throw new Error(`Erro ao obter transação com ID ${id} da API.`);
+
+    }
   }
 
-  createTransaction(newTransaction: any) {
+  async createTransaction(newTransaction: any): Promise<any> {
+    try {
+      // Faz a requisição POST para criar a transação na Mock API
+      const response: AxiosResponse<any> = await this.httpService.post(`${this.baseUrl}${this.transactionsEndpoint}`, newTransaction).toPromise();
+      this.processTransaction(newTransaction);
+      // Retorna a transação criada pela Mock API
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Erro ao criar transação na API.');
+    }
+  }
+
+  /*createTransaction(newTransaction: any) {
     console.log('LOG-TIAGO:::>  Entrou no create Transaction');
     this.transactions.push(newTransaction);
     this.processTransaction(newTransaction);
     return newTransaction;
-  }
+  }*/
 
-  deleteTransaction(id: string) {
-    //console.log('chegou o parametro no delete ' + id)
-    const index = this.transactions.findIndex(
-      (transaction) => transaction.id === id,
-    );
-    if (index !== -1) {
-      const deletedTransaction = this.transactions.splice(index, 1);
-      return { success: true, deletedTransaction };
-    } else {
-      return { success: false, message: 'Transaction not found' };
+  async deleteTransaction(id: string): Promise<any> {
+    try {
+      // Faz a requisição DELETE para excluir a transação na Mock API
+      const response: AxiosResponse<any> = await this.httpService.delete(`${this.baseUrl}${this.transactionsEndpoint}/${id}`).toPromise();
+
+      // Retorna os dados da transação excluída pela Mock API
+      return { success: true, deletedTransaction: response.data };
+    } catch (error) {
+      console.error(error);
+      throw new Error(`Erro ao excluir transação com ID ${id} na API.`);
     }
   }
+
+
+
+  /* *********************************************************************************************************************
+  _________________________________PROCESSAMENTO DO PAYBLES 
+   ***********************************************************************************************************************/
   
   processTransaction(transaction: any) {
     console.log('LOG-TIAGO:::>  Entrou na processTransaction');
