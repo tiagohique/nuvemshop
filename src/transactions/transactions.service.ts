@@ -126,9 +126,7 @@ export class TransactionsService {
 
   private calculatePayable(transaction: any) {
     console.log('LOG-TIAGO:::>  Entrou no calculatePayable');
-    if (transaction.method === 'debit_card'){
 
-    }
     const fee = transaction.method === 'debit_card' ? 0.02 : 0.04;
     const totalAmount = parseFloat(transaction.value);
     const discountedAmount = totalAmount * (1 - fee);

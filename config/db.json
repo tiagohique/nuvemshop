@@ -1,16 +1,6 @@
 {
   "transactions": [
     {
-      "value": "340.30",
-      "description": "T-Shirt Black/M",
-      "method": "credit_card",
-      "cardNumber": "3486",
-      "cardHolderName": "Fonsi Julian",
-      "cardExpirationDate": "04/28",
-      "cardCvv": "290",
-      "id": "KiV2szQ"
-    },
-    {
       "id": "TIV2sSD3",
       "value": "100.00",
       "description": "Calca M",
@@ -22,6 +12,26 @@
     },
     {
       "id": "TIV2sSD3333",
+      "value": "100.00",
+      "description": "Calca M",
+      "method": "debit_card",
+      "cardNumber": "3432",
+      "cardHolderName": "Souza Lima",
+      "cardExpirationDate": "04/25",
+      "cardCvv": "292"
+    },
+    {
+      "id": "TIV2sS56",
+      "value": "100.00",
+      "description": "Calca M",
+      "method": "credit_card",
+      "cardNumber": "3432",
+      "cardHolderName": "Souza Lima",
+      "cardExpirationDate": "04/25",
+      "cardCvv": "292"
+    },
+    {
+      "id": "TIV2sS45",
       "value": "100.00",
       "description": "Calca M",
       "method": "debit_card",
@@ -55,6 +65,30 @@
       "subtotal": "100",
       "discount": "2",
       "total": "98"
+    },
+    {
+      "id": "TIV2sS56",
+      "status": "waiting_funds",
+      "create_date": "06/01/2024",
+      "subtotal": "100.00",
+      "discount": "4.00",
+      "total": "96.00"
+    },
+    {
+      "id": "TIV2sS45",
+      "status": "paid",
+      "create_date": "07/12/2023",
+      "subtotal": "100.00",
+      "discount": "2.00",
+      "total": "98.00"
+    },
+    {
+      "id": "4",
+      "status": "paid",
+      "create_date": "07/12/2023",
+      "subtotal": "150",
+      "discount": "3",
+      "total": "147"
     }
   ]
 }
